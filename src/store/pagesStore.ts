@@ -2,19 +2,30 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { getPages, updatePage, PageData } from "../api";
 
-const usePagesStore = create(
+type PagesStore = {
+    pagesData: PageData[];
+    getPagesLoading: boolean;
+    getPagesError: string;
+    getPagesUnitialized: boolean;
+    getPages: () => Promise<void>;
+    updatePageLoading: boolean;
+    updatePageError: string;
+    updatePage: (pageData: PageData) => Promise<void>;
+};
+
+const usePagesStore = create<PagesStore>()(
     devtools(
         (set) => ({
             pagesData: [],
 
             getPagesLoading: false,
-            getPagesError: null,
+            getPagesError: "",
             getPagesUnitialized: true,
             getPages: async () => {
                 set({ getPagesLoading: true, getPagesUnitialized: false });
                 try {
                     const response = await getPages();
-                    set({ pagesData: response.data, getPagesError: null });
+                    set({ pagesData: response.data, getPagesError: "" });
                 } catch (error) {
                     if (error instanceof Error) {
                         set({ getPagesError: error.message });
@@ -29,12 +40,12 @@ const usePagesStore = create(
             },
 
             updatePageLoading: false,
-            updatePageError: null,
+            updatePageError: "",
             updatePage: async (pageData: PageData) => {
                 set({ updatePageLoading: true });
                 try {
                     const response = await updatePage(pageData);
-                    set({ pagesData: response.data, updatePagesError: null });
+                    set({ pagesData: response.data, updatePageError: "" });
                 } catch (error) {
                     if (error instanceof Error) {
                         set({ updatePageError: error.message });

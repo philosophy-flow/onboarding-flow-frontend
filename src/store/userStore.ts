@@ -8,18 +8,45 @@ import {
     UserUpdateData,
 } from "../api";
 
-const useUserStore = create(
+type User = {
+    username: string;
+    current_page: number;
+    about: string;
+    dob: string;
+    street: string;
+    city: string;
+    state: string;
+    zip: string;
+};
+
+type UserStore = {
+    userData: User | null;
+
+    getUserLoading: boolean;
+    getUserError: string;
+    getUser: (username: string) => Promise<void>;
+
+    createUserLoading: boolean;
+    createUserError: string;
+    createUser: (userData: UserRegisterData) => Promise<void>;
+
+    updateUserLoading: boolean;
+    updateUserError: string;
+    updateUser: (username: string, userData: UserUpdateData) => Promise<void>;
+};
+
+const useUserStore = create<UserStore>()(
     devtools(
         (set) => ({
             userData: null,
 
             getUserLoading: false,
-            getUserError: null,
+            getUserError: "",
             getUser: async (username: string) => {
-                set({ getUserLoading: true, getUserError: null });
+                set({ getUserLoading: true, getUserError: "" });
                 try {
                     const newUser = await getUser(username);
-                    set({ userData: newUser });
+                    set({ userData: newUser.data });
                 } catch (error) {
                     if (error instanceof Error) {
                         set({ getUserError: error.message });
@@ -32,12 +59,12 @@ const useUserStore = create(
             },
 
             createUserLoading: false,
-            createUserError: null,
+            createUserError: "",
             createUser: async (userData: UserRegisterData) => {
-                set({ createUserLoading: true, createUserError: null });
+                set({ createUserLoading: true, createUserError: "" });
                 try {
                     const newUser = await createUser(userData);
-                    set({ userData: newUser });
+                    set({ userData: newUser.data });
                 } catch (error) {
                     if (error instanceof Error) {
                         set({ createUserError: error.message });
@@ -50,12 +77,12 @@ const useUserStore = create(
             },
 
             updateUserLoading: false,
-            updateUserError: null,
+            updateUserError: "",
             updateUser: async (username: string, userData: UserUpdateData) => {
-                set({ updateUserLoading: true, updateUserError: null });
+                set({ updateUserLoading: true, updateUserError: "" });
                 try {
                     const newUser = await updateUser(username, userData);
-                    set({ userData: newUser });
+                    set({ userData: newUser.data });
                 } catch (error) {
                     if (error instanceof Error) {
                         set({ updateUserError: error.message });

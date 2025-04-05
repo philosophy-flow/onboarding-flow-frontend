@@ -7,7 +7,7 @@ export default function FlowModularPage() {
     const { pagesData } = usePagesStore();
 
     const numPages = pagesData.length + 1;
-    const overflow = numPages > 1 && numPages < pageNumber;
+    const overflow = numPages > 1 && numPages < parseInt(pageNumber!);
 
     return overflow ? (
         <Navigate to="/flow/1" />
