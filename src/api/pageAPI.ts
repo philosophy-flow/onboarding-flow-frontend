@@ -10,7 +10,7 @@ export type PageData = {
 
 export const getPages = async () => {
     try {
-        const response = await fetch("http://localhost:8000/get-pages");
+        const response = await fetch("http://localhost:8000/api/get-pages");
 
         if (response.ok) {
             const data = await response.json();
@@ -27,7 +27,7 @@ export const getPages = async () => {
 
 export const updatePage = async (pageData: PageData) => {
     try {
-        const response = await fetch("http://localhost:8000/update-page", {
+        const response = await fetch("http://localhost:8000/api/update-page", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

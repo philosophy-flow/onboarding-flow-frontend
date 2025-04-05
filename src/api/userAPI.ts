@@ -16,7 +16,7 @@ export type UserUpdateData = {
 export const getUser = async (username: string) => {
     try {
         const response = await fetch(
-            `http://localhost:8000/get-user/${username}`,
+            `http://localhost:8000/api/get-user/${username}`,
         );
 
         if (response.ok) {
@@ -34,7 +34,7 @@ export const getUser = async (username: string) => {
 
 export const createUser = async (userData: UserRegisterData) => {
     try {
-        const response = await fetch("http://localhost:8000/create-user", {
+        const response = await fetch("http://localhost:8000/api/create-user", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -61,7 +61,7 @@ export const updateUser = async (
 ) => {
     try {
         const response = await fetch(
-            `http://localhost:8000/update-user/${username}`,
+            `http://localhost:8000/update-user/api/${username}`,
             {
                 method: "PATCH",
                 headers: {
