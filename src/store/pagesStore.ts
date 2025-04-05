@@ -3,7 +3,7 @@ import { devtools } from "zustand/middleware";
 import { getPages, updatePage, PageData } from "../api";
 
 type PagesStore = {
-    pagesData: PageData[];
+    pages: PageData[];
     getPagesLoading: boolean;
     getPagesError: string;
     getPagesUnitialized: boolean;
@@ -16,7 +16,7 @@ type PagesStore = {
 const usePagesStore = create<PagesStore>()(
     devtools(
         (set) => ({
-            pagesData: [],
+            pages: [],
 
             getPagesLoading: false,
             getPagesError: "",
@@ -25,7 +25,7 @@ const usePagesStore = create<PagesStore>()(
                 set({ getPagesLoading: true, getPagesUnitialized: false });
                 try {
                     const response = await getPages();
-                    set({ pagesData: response.data, getPagesError: "" });
+                    set({ pages: response.data, getPagesError: "" });
                 } catch (error) {
                     if (error instanceof Error) {
                         set({ getPagesError: error.message });
@@ -45,7 +45,7 @@ const usePagesStore = create<PagesStore>()(
                 set({ updatePageLoading: true });
                 try {
                     const response = await updatePage(pageData);
-                    set({ pagesData: response.data, updatePageError: "" });
+                    set({ pages: response.data, updatePageError: "" });
                 } catch (error) {
                     if (error instanceof Error) {
                         set({ updatePageError: error.message });
