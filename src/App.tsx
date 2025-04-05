@@ -1,7 +1,6 @@
-import { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+import { useBootstrap } from "./hooks";
 
-import { usePagesStore } from "./store";
 import {
     BaseLayout,
     FlowLoginPage,
@@ -11,13 +10,8 @@ import {
 } from "./pages";
 
 function App() {
-    const { getPages } = usePagesStore();
-    useEffect(() => {
-        async function bootstrap() {
-            await getPages();
-        }
-        bootstrap();
-    }, [getPages]);
+    useBootstrap();
+
     return (
         <Routes>
             <Route path="/" element={<BaseLayout />}>
