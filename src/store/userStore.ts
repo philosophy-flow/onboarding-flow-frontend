@@ -35,10 +35,21 @@ type UserStore = {
     updateUser: (username: string, userData: UserUpdateData) => Promise<void>;
 };
 
+const initialUser = {
+    username: "praxmatic",
+    current_page: 2,
+    about: "",
+    dob: "",
+    street: "",
+    city: "",
+    state: "",
+    zip: "",
+};
+
 const useUserStore = create<UserStore>()(
     devtools(
         (set) => ({
-            userData: null,
+            userData: initialUser,
 
             getUserLoading: false,
             getUserError: "",

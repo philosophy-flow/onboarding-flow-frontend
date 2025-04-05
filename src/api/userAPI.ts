@@ -61,7 +61,7 @@ export const updateUser = async (
 ) => {
     try {
         const response = await fetch(
-            `http://localhost:8000/update-user/api/${username}`,
+            `http://localhost:8000/api/update-user/${username}`,
             {
                 method: "PATCH",
                 headers: {
