@@ -1,8 +1,8 @@
-type ComponentData = {
+export type ComponentData = {
     component_name: string;
 };
 
-type PageData = {
+export type PageData = {
     page_number: number;
     title?: string;
     components: ComponentData[];

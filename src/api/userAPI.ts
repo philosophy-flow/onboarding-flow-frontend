@@ -1,9 +1,9 @@
-type UserRegisterData = {
+export type UserRegisterData = {
     username: string;
     password: string;
 };
 
-type UserUpdateData = {
+export type UserUpdateData = {
     current_page?: number;
     about?: string;
     dob?: string;
