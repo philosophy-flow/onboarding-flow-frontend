@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useDebounce } from "use-debounce";
 import { ModularComponent } from "../../types";
 
 export default function BirthdayModule({
@@ -10,23 +10,25 @@ export default function BirthdayModule({
     const [day, setDay] = useState("");
     const [year, setYear] = useState("");
 
+    const [delayedDateStr] = useDebounce(dateStr, 2000);
+
     useEffect(() => {
-        const getDateStr = () => {
-            if (!month || !day || !year) {
-                return "";
-            }
+        if (delayedDateStr) {
+            handleInputChange("dob", delayedDateStr);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [delayedDateStr]);
 
+    useEffect(() => {
+        if (month && day && year) {
             const paddedMonth = month.padStart(2, "0");
-            const paddedDay = month.padStart(2, "0");
+            const paddedDay = day.padStart(2, "0");
 
-            return `${year}-${paddedMonth}-${paddedDay}T00:00:00.000Z`;
-        };
+            const dateStr = `${year}-${paddedMonth}-${paddedDay}T00:00:00.000Z`;
 
-        const dateStr = getDateStr();
-        setDateStr(dateStr);
-
-        handleInputChange("dob", dateStr);
-    }, [month, day, year, handleInputChange]);
+            setDateStr(dateStr);
+        }
+    }, [month, day, year]);
 
     return (
         <>

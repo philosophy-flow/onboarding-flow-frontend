@@ -22,7 +22,6 @@ export default function FlowLoginPage() {
 
     const handleSubmit = async (e: MouseEvent) => {
         e.preventDefault();
-        console.log(formData);
 
         await createUser({
             username: formData.username,

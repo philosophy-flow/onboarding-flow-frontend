@@ -1,13 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDebounce } from "use-debounce";
+
 import { ModularComponent, TextAreaChange } from "../../types";
 
 export default function AboutModule({ handleInputChange }: ModularComponent) {
     const [about, setAbout] = useState("");
+    const [delayedAbout] = useDebounce(about, 2000);
+
+    useEffect(() => {
+        handleInputChange("about", delayedAbout);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [delayedAbout]);
 
     const handleChange = (e: TextAreaChange) => {
-        console.log(e.target.value);
         setAbout(e.target.value);
-        handleInputChange(e.target.name, e.target.value);
     };
 
     return (

@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDebounce } from "use-debounce";
+
 import { ModularComponent, InputChange } from "../../types";
 
 export default function AddressModule({ handleInputChange }: ModularComponent) {
@@ -8,10 +10,19 @@ export default function AddressModule({ handleInputChange }: ModularComponent) {
         state: "",
         zip: "",
     });
+    const [delayedAddress] = useDebounce(address, 2000);
+
+    useEffect(() => {
+        const keys = Object.keys(delayedAddress) as Array<keyof typeof address>;
+        keys.forEach((key) => {
+            handleInputChange(key, delayedAddress[key]);
+        });
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [delayedAddress]);
 
     const handleChange = (e: InputChange) => {
         setAddress((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-        handleInputChange(e.target.name, e.target.value);
     };
 
     return (

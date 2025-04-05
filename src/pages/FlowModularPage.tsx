@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 
 import { usePagesStore, useUserStore } from "../store";
 import componentMap from "../components/modules";
+import { InputChangeHandler } from "../types";
 
 export default function FlowModularPage() {
     const { pageNumber } = useParams();
@@ -17,7 +18,7 @@ export default function FlowModularPage() {
     const numPages = pages.length + 1;
     const overflow = numPages > 1 && numPages < parseInt(pageNumber!);
 
-    const handleInputChange = async (
+    const handleInputChange: InputChangeHandler = async (
         inputName: string,
         inputValue: string | number,
     ) => {
