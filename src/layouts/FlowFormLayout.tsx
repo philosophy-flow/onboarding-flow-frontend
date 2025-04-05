@@ -1,9 +1,9 @@
 import { Outlet } from "react-router-dom";
 
-export default function BaseLayout() {
+export default function FlowFormLayout() {
     return (
-        <main>
+        <form>
             <Outlet />
-        </main>
+        </form>
     );
 }
