@@ -1,10 +1,15 @@
 import { useNavigate } from "react-router-dom";
 
-import Button from "../components/common/Button";
 import { MouseEvent } from "../types";
+import { usePagesStore } from "../store";
+import PageCard from "../components/common/PageCard";
+import Button from "../components/common/Button";
 
 export default function AdminPage() {
     const navigate = useNavigate();
+    const { pages } = usePagesStore();
+
+    console.log(pages);
 
     const handleClick = (e: MouseEvent) => {
         e.preventDefault();
@@ -39,17 +44,9 @@ export default function AdminPage() {
                 <div className="w-full pl-8">
                     <h3 className="text-xl">Pages</h3>
                     <ul className="mt-8">
-                        <li className="mb-3 flex max-w-md items-center rounded border bg-gray-50 p-3 text-lg">
-                            <p className="mr-4">Page 2 |</p>
-                            <ul className="flex items-center">
-                                <li className="cursor-pointer rounded-full bg-gray-300 px-3 py-2 text-center text-sm hover:bg-gray-400">
-                                    Component 3
-                                </li>
-                            </ul>
-                        </li>
-                        <li className="mb-3 max-w-md rounded border bg-gray-50 p-3 text-lg">
-                            <p>Page 3 | </p>
-                        </li>
+                        {pages.map((page) => (
+                            <PageCard page={page} key={page.page_number} />
+                        ))}
                     </ul>
                     <p className="text-sm">
                         Click a component to remove it from a page.
