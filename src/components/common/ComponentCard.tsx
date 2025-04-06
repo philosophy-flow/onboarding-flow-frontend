@@ -25,7 +25,7 @@ export default function ComponentCard({
                 <option value="">Select Page</option>
                 {pages.map((page) => (
                     <option value={page.page_number} key={page.page_number}>
-                        Page #{page.page_number}
+                        Page {page.page_number}
                     </option>
                 ))}
             </select>

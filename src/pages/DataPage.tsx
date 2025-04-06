@@ -15,7 +15,7 @@ export default function DataPage() {
 
     return (
         <div>
-            <h2 className="text-2xl underline">User Data</h2>
+            <h2 className="text-2xl font-bold">User Data</h2>
             <table className="my-6 w-[50%] text-left text-sm rtl:text-right">
                 <tbody>
                     {Object.entries(userData!).map(([key, value]) => (

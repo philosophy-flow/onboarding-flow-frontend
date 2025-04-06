@@ -50,9 +50,9 @@ export default function AdminPage() {
 
     return (
         <div>
-            <h2 className="text-2xl underline">Admin</h2>
-            <div className="mt-8 flex pb-6">
-                <div className="sidebar border-r-2 pr-8">
+            <h2 className="text-2xl font-bold">Admin</h2>
+            <div className="my-6 flex">
+                <div className="border-r-2 pr-8">
                     <h3 className="text-xl">Components</h3>
                     <ul className="mt-4">
                         {unusedComponents.map((component) => (

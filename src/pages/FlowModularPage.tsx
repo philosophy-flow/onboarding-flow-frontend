@@ -53,8 +53,10 @@ export default function FlowModularPage() {
     return overflow ? (
         <Navigate to="/data" />
     ) : (
-        <section>
-            <h2 className="mb-6 text-2xl underline">{currentPage?.title}</h2>
+        <>
+            <h3 className="mb-4 text-xl">
+                {currentPage.title || `Page ${currentPage.page_number}`}
+            </h3>
 
             {pageComponentIDs.map((id, index) => (
                 <Fragment key={index}>{generateComponent(id)}</Fragment>
@@ -64,6 +66,6 @@ export default function FlowModularPage() {
                 <Button label="Previous" onClick={handlePrevious} />
                 <Button label="Next" onClick={handleNext} />
             </div>
-        </section>
+        </>
     );
 }

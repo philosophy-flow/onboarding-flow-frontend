@@ -49,9 +49,7 @@ export default function FlowLoginPage() {
 
     return (
         <>
-            <h2 className="mb-6 text-2xl underline">
-                Welcome to the Onboarding Flow
-            </h2>
+            <h3 className="mb-4 text-xl">Login</h3>
             <Input
                 name="username"
                 label="Username:"
