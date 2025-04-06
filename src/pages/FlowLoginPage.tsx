@@ -5,11 +5,11 @@ import { FormEvent, MouseEvent } from "../types";
 import { useUserStore } from "../store";
 
 export default function FlowLoginPage() {
+    const { createUser, getUser, userData } = useUserStore();
     const [formData, setFormData] = useState({
-        username: "",
+        username: userData?.username,
         password: "",
     });
-    const { createUser, getUser } = useUserStore();
     const navigate = useNavigate();
 
     const handleInputChange = (e: FormEvent) => {
@@ -24,7 +24,7 @@ export default function FlowLoginPage() {
         e.preventDefault();
 
         await createUser({
-            username: formData.username,
+            username: formData.username!,
             password: formData.password,
         });
 
@@ -34,7 +34,7 @@ export default function FlowLoginPage() {
     const handleLogin = async (e: MouseEvent) => {
         e.preventDefault();
 
-        await getUser(formData.username);
+        await getUser(formData.username!);
 
         navigate("/flow/2");
     };

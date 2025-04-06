@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { useDebounce } from "use-debounce";
 
+import { useUserStore } from "../../store";
 import { ModularComponent, TextAreaChange } from "../../types";
 
 export default function AboutModule({ handleInputChange }: ModularComponent) {
-    const [about, setAbout] = useState("");
+    const { userData } = useUserStore();
+    const [about, setAbout] = useState(userData?.about);
     const [delayedAbout] = useDebounce(about, 2000);
 
     useEffect(() => {

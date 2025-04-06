@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
 import { useDebounce } from "use-debounce";
 
+import { useUserStore } from "../../store";
 import { ModularComponent, InputChange } from "../../types";
 
 export default function AddressModule({ handleInputChange }: ModularComponent) {
+    const { userData } = useUserStore();
+
     const [address, setAddress] = useState({
-        street: "",
-        city: "",
-        state: "",
-        zip: "",
+        street: userData?.street,
+        city: userData?.city,
+        state: userData?.state,
+        zip: userData?.zip,
     });
     const [delayedAddress] = useDebounce(address, 2000);
 

@@ -1,15 +1,19 @@
 import { useState, useEffect } from "react";
 import { useDebounce } from "use-debounce";
+
+import { useUserStore } from "../../store";
 import { ModularComponent } from "../../types";
 
 export default function BirthdayModule({
     handleInputChange,
 }: ModularComponent) {
-    const [dateStr, setDateStr] = useState("");
-    const [month, setMonth] = useState("");
-    const [day, setDay] = useState("");
-    const [year, setYear] = useState("");
+    const { userData } = useUserStore();
+    const [storedYear, storedMonth, storedDay] = userData!.dob.split("-");
 
+    const [dateStr, setDateStr] = useState("");
+    const [month, setMonth] = useState(storedMonth);
+    const [day, setDay] = useState(storedDay);
+    const [year, setYear] = useState(storedYear);
     const [delayedDateStr] = useDebounce(dateStr, 2000);
 
     useEffect(() => {
