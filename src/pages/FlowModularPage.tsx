@@ -9,7 +9,7 @@ import Button from "../components/common/Button";
 export default function FlowModularPage() {
     const { pageNumber } = useParams();
     const { pages } = usePagesStore();
-    const { updateUser, userData } = useUserStore();
+    const { updateUser, userData, getUserLoading } = useUserStore();
     const navigate = useNavigate();
 
     const currentPage = pages[parseInt(pageNumber!) - 2];
@@ -56,19 +56,21 @@ export default function FlowModularPage() {
     return overflow ? (
         <Navigate to="/data" />
     ) : (
-        <>
-            <h3 className="mb-4 text-xl">
-                {currentPage.title || `Page ${currentPage.page_number}`}
-            </h3>
+        !getUserLoading && (
+            <>
+                <h3 className="mb-4 text-xl">
+                    {currentPage.title || `Page ${currentPage.page_number}`}
+                </h3>
 
-            {pageComponentIDs.map((id, index) => (
-                <Fragment key={index}>{generateComponent(id)}</Fragment>
-            ))}
+                {pageComponentIDs.map((id, index) => (
+                    <Fragment key={index}>{generateComponent(id)}</Fragment>
+                ))}
 
-            <div>
-                <Button label="Previous" onClick={handlePrevious} />
-                <Button label="Next" onClick={handleNext} />
-            </div>
-        </>
+                <div>
+                    <Button label="Previous" onClick={handlePrevious} />
+                    <Button label="Next" onClick={handleNext} />
+                </div>
+            </>
+        )
     );
 }
