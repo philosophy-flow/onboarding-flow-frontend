@@ -13,10 +13,14 @@ export type UserUpdateData = {
     zip?: string;
 };
 
-export const getUser = async (username: string) => {
+export const getUser = async (username: string = "refresh") => {
     try {
         const response = await fetch(
             `http://localhost:8000/api/get-user/${username}`,
+            {
+                method: "GET",
+                credentials: "include",
+            },
         );
 
         if (response.ok) {
@@ -39,6 +43,7 @@ export const createUser = async (userData: UserRegisterData) => {
             headers: {
                 "Content-Type": "application/json",
             },
+            credentials: "include",
             body: JSON.stringify(userData),
         });
 
@@ -67,6 +72,7 @@ export const updateUser = async (
                 headers: {
                     "Content-Type": "application/json",
                 },
+                credentials: "include",
                 body: JSON.stringify(userData),
             },
         );

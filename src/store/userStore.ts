@@ -24,7 +24,7 @@ type UserStore = {
 
     getUserLoading: boolean;
     getUserError: string;
-    getUser: (username: string) => Promise<void>;
+    getUser: (username?: string) => Promise<void>;
 
     createUserLoading: boolean;
     createUserError: string;

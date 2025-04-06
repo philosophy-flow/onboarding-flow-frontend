@@ -37,7 +37,7 @@ export default function FlowLoginPage() {
     const handleLogin = async (e: MouseEvent) => {
         e.preventDefault();
 
-        await getUser(formData.username!);
+        await getUser(formData.username || "refresh");
 
         navigate("/flow/2");
     };
