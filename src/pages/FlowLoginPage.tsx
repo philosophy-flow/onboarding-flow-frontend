@@ -7,7 +7,13 @@ import { useUserStore } from "../store";
 import Input from "../components/common/Input";
 import Button from "../components/common/Button";
 
+type FormError = {
+    create: boolean;
+    login: boolean;
+};
+
 export default function FlowLoginPage() {
+    const [formError, setFormError] = useState({ create: false, login: false });
     const { createUser, getUser, updateUser, userData } = useUserStore();
     const [formData, setFormData] = useState({
         username: userData?.username,
@@ -30,21 +36,43 @@ export default function FlowLoginPage() {
     const handleCreate = async (e: MouseEvent) => {
         e.preventDefault();
 
+        setFormError({
+            create: false,
+            login: false,
+        });
+
         await createUser({
             username: formData.username!,
             password: formData.password,
         });
 
-        navigate("/flow/2");
+        if (userData!.username) {
+            navigate("/flow/2");
+        } else {
+            setFormError((prev: FormError) => ({ ...prev, create: true }));
+        }
     };
 
     const handleLogin = async (e: MouseEvent) => {
         e.preventDefault();
 
+        setFormError({
+            create: false,
+            login: false,
+        });
+
         await getUser(formData.username || "refresh");
 
-        await updateUser(userData!.username, { current_page: 2 });
-        navigate("/flow/2");
+        if (userData!.username) {
+            await updateUser(userData!.username, { current_page: 2 });
+            navigate("/flow/2");
+            setFormError({
+                create: false,
+                login: false,
+            });
+        } else {
+            setFormError((prev: FormError) => ({ ...prev, login: true }));
+        }
     };
 
     const handleAdmin = (e: MouseEvent) => {
@@ -81,10 +109,21 @@ export default function FlowLoginPage() {
                 />
                 <Button label="Admin" onClick={handleAdmin} />
             </div>
+
+            {formError.create && (
+                <p className="my-2 max-w-100 text-sm text-red-600">
+                    Unable to create account. Username might be taken.
+                </p>
+            )}
+            {formError.login && (
+                <p className="my-2 max-w-100 text-sm text-red-600">
+                    Unable to login. Username might not exist.
+                </p>
+            )}
+
             <p className="my-2 max-w-100 text-sm">
                 Enter a username and password to create a new account.
             </p>
-
             <p className="my-2 max-w-100 text-sm">
                 If you already created an account, enter your username{" "}
                 <span className="underline">without</span> your password and
