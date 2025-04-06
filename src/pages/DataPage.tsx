@@ -6,10 +6,11 @@ import Button from "../components/common/Button";
 
 export default function DataPage() {
     const navigate = useNavigate();
-    const { userData } = useUserStore();
+    const { userData, updateUser } = useUserStore();
 
-    const handleClick = (e: MouseEvent) => {
+    const handleClick = async (e: MouseEvent) => {
         e.preventDefault();
+        await updateUser(userData!.username, { current_page: 1 });
         navigate("/flow/1");
     };
 

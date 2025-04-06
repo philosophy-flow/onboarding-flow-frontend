@@ -8,7 +8,7 @@ import Input from "../components/common/Input";
 import Button from "../components/common/Button";
 
 export default function FlowLoginPage() {
-    const { createUser, getUser, userData } = useUserStore();
+    const { createUser, getUser, updateUser, userData } = useUserStore();
     const [formData, setFormData] = useState({
         username: userData?.username,
         password: "",
@@ -39,6 +39,7 @@ export default function FlowLoginPage() {
 
         await getUser(formData.username || "refresh");
 
+        await updateUser(userData!.username, { current_page: 2 });
         navigate("/flow/2");
     };
 

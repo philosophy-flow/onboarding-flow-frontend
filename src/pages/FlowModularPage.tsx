@@ -35,18 +35,21 @@ export default function FlowModularPage() {
         ) : null;
     };
 
-    const handlePrevious = (e: MouseEvent) => {
+    const handlePrevious = async (e: MouseEvent) => {
         e.preventDefault();
 
         const prevPage = parseInt(pageNumber!) - 1;
+
+        await updateUser(userData!.username, { current_page: prevPage });
         navigate(`/flow/${prevPage}`);
     };
 
-    const handleNext = (e: MouseEvent) => {
+    const handleNext = async (e: MouseEvent) => {
         e.preventDefault();
 
         const nextPage = parseInt(pageNumber!) + 1;
 
+        await updateUser(userData!.username, { current_page: nextPage });
         navigate(`/flow/${nextPage}`);
     };
 
