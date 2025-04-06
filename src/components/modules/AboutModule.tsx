@@ -21,13 +21,17 @@ export default function AboutModule({ handleInputChange }: ModularComponent) {
     };
 
     return (
-        <div>
-            <label htmlFor="about">About</label>
+        <div className="mb-6 w-100">
+            <label htmlFor="about" className="block">
+                About
+            </label>
             <textarea
                 name="about"
                 id="about"
                 value={about}
                 onChange={handleChange}
+                maxLength={175}
+                className="h-32 w-full resize-none border-2 p-3"
             />
         </div>
     );

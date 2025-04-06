@@ -57,9 +57,10 @@ const useUserStore = create<UserStore>()(
                 set({ getUserLoading: true, getUserError: "" });
                 try {
                     const newUser = await getUser(username);
-                    set({ userData: newUser.data });
+                    set({ userData: newUser.data || initialUser });
                 } catch (error) {
                     if (error instanceof Error) {
+                        set({ userData: initialUser });
                         set({ getUserError: error.message });
                     } else {
                         set({ getUserError: "An unknown error occurred" });
@@ -75,9 +76,10 @@ const useUserStore = create<UserStore>()(
                 set({ createUserLoading: true, createUserError: "" });
                 try {
                     const newUser = await createUser(userData);
-                    set({ userData: newUser.data });
+                    set({ userData: newUser.data || initialUser });
                 } catch (error) {
                     if (error instanceof Error) {
+                        set({ userData: initialUser || initialUser });
                         set({ createUserError: error.message });
                     } else {
                         set({ createUserError: "An unknown error occurred" });
@@ -93,9 +95,10 @@ const useUserStore = create<UserStore>()(
                 set({ updateUserLoading: true, updateUserError: "" });
                 try {
                     const newUser = await updateUser(username, userData);
-                    set({ userData: newUser.data });
+                    set({ userData: newUser.data || initialUser });
                 } catch (error) {
                     if (error instanceof Error) {
+                        set({ userData: initialUser || initialUser });
                         set({ updateUserError: error.message });
                     } else {
                         set({ updateUserError: "An unknown error occurred" });

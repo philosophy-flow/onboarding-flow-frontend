@@ -3,6 +3,7 @@ import { useDebounce } from "use-debounce";
 
 import { useUserStore } from "../../store";
 import { ModularComponent } from "../../types";
+import Input from "../common/input";
 
 export default function BirthdayModule({
     handleInputChange,
@@ -35,39 +36,30 @@ export default function BirthdayModule({
     }, [month, day, year]);
 
     return (
-        <>
-            <label htmlFor="birthday"></label>
-            <div id="birthday">
-                <div>
-                    <label htmlFor="month">Month</label>
-                    <input
-                        name="month"
-                        id="month"
-                        value={month}
-                        onChange={(e) => setMonth(e.target.value)}
-                    />
-                </div>
+        <div className="mb-6">
+            <label htmlFor="birthday" className="mb-3"></label>
+            <div id="birthday" className="w-100 border-2 p-2">
+                <Input
+                    name="month"
+                    label="Month:"
+                    value={month}
+                    onChange={(e) => setMonth(e.target.value)}
+                />
 
-                <div>
-                    <label htmlFor="day">Day</label>
-                    <input
-                        name="'day"
-                        id="day"
-                        value={day}
-                        onChange={(e) => setDay(e.target.value)}
-                    />
-                </div>
+                <Input
+                    name="day"
+                    label="Day:"
+                    value={day}
+                    onChange={(e) => setDay(e.target.value)}
+                />
 
-                <div>
-                    <label htmlFor="year">Year</label>
-                    <input
-                        name="'year"
-                        id="year"
-                        value={year}
-                        onChange={(e) => setYear(e.target.value)}
-                    />
-                </div>
+                <Input
+                    name="year"
+                    label="Year:"
+                    value={year}
+                    onChange={(e) => setYear(e.target.value)}
+                />
             </div>
-        </>
+        </div>
     );
 }

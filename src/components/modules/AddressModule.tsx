@@ -3,6 +3,7 @@ import { useDebounce } from "use-debounce";
 
 import { useUserStore } from "../../store";
 import { ModularComponent, InputChange } from "../../types";
+import Input from "../common/input";
 
 export default function AddressModule({ handleInputChange }: ModularComponent) {
     const { userData } = useUserStore();
@@ -31,49 +32,41 @@ export default function AddressModule({ handleInputChange }: ModularComponent) {
     };
 
     return (
-        <>
-            <label htmlFor="address"></label>
-            <div id="address">
-                <div>
-                    <label htmlFor="street">Street</label>
-                    <input
+        <div className="mb-6">
+            <label htmlFor="address" className="mb-3">
+                Address
+            </label>
+            <div className="w-100 border-2 p-2">
+                <div id="address" className="p-y-1">
+                    <Input
                         name="street"
-                        id="street"
-                        value={address.street}
+                        label="Street:"
+                        value={address.street || ""}
                         onChange={handleChange}
                     />
-                </div>
 
-                <div>
-                    <label htmlFor="city">City</label>
-                    <input
+                    <Input
                         name="city"
-                        id="city"
-                        value={address.city}
+                        label="City:"
+                        value={address.city || ""}
                         onChange={handleChange}
                     />
-                </div>
 
-                <div>
-                    <label htmlFor="state">State</label>
-                    <input
+                    <Input
                         name="state"
-                        id="state"
-                        value={address.state}
+                        label="State:"
+                        value={address.state || ""}
                         onChange={handleChange}
                     />
-                </div>
 
-                <div>
-                    <label htmlFor="zip">Zip</label>
-                    <input
+                    <Input
                         name="zip"
-                        id="zip"
-                        value={address.zip}
+                        label="Zip:"
+                        value={address.zip || ""}
                         onChange={handleChange}
                     />
                 </div>
             </div>
-        </>
+        </div>
     );
 }

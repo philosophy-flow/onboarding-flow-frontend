@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { FormEvent, MouseEvent } from "../types";
 import { useUserStore } from "../store";
 
+import Input from "../components/common/Input";
+import Button from "../components/common/Button";
+
 export default function FlowLoginPage() {
     const { createUser, getUser, userData } = useUserStore();
     const [formData, setFormData] = useState({
@@ -12,7 +15,7 @@ export default function FlowLoginPage() {
     });
     const navigate = useNavigate();
 
-    const handleInputChange = (e: FormEvent) => {
+    const handleLoginInputChange = (e: FormEvent) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
@@ -20,7 +23,7 @@ export default function FlowLoginPage() {
         });
     };
 
-    const handleSubmit = async (e: MouseEvent) => {
+    const handleCreate = async (e: MouseEvent) => {
         e.preventDefault();
 
         await createUser({
@@ -41,43 +44,31 @@ export default function FlowLoginPage() {
 
     return (
         <>
-            <h2 className="text-2xl underline">
+            <h2 className="mb-6 text-2xl underline">
                 Welcome to the Onboarding Flow
             </h2>
-            <div className="mt-4">
-                <label htmlFor="username">Username:</label>
-                <input
-                    id="username"
-                    name="username"
-                    className="block border p-1"
-                    value={formData.username}
-                    onChange={handleInputChange}
+            <Input
+                name="username"
+                label="Username:"
+                value={formData.username || ""}
+                onChange={handleLoginInputChange}
+            />
+            <Input
+                name="password"
+                label="Password"
+                value={formData.password || ""}
+                onChange={handleLoginInputChange}
+            />
+
+            <div>
+                <Button
+                    label="Create Account"
+                    onClick={(e) => handleCreate(e)}
                 />
+                <Button label="Continue Flow" onClick={(e) => handleLogin(e)} />
             </div>
-            <div className="mt-4">
-                <label htmlFor="password">Password:</label>
-                <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    className="block border p-1"
-                    value={formData.password}
-                    onChange={handleInputChange}
-                />
-            </div>
-            <button
-                onClick={(e) => handleSubmit(e)}
-                className="mt-4 mr-4 cursor-pointer border p-2"
-            >
-                Create Account
-            </button>
-            <button
-                onClick={(e) => handleLogin(e)}
-                className="mt-4 mr-4 cursor-pointer border p-2"
-            >
-                Continue Flow
-            </button>
-            <p className="mt-4 text-sm">
+
+            <p className="mt-2 text-sm">
                 If you already created an account, use your credentials and
                 press the <span className="italic">continue</span> button to
                 continue updating your profile.

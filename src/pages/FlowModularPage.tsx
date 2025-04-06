@@ -1,9 +1,10 @@
 import { useParams, Navigate, useNavigate } from "react-router-dom";
-import { ReactNode } from "react";
+import { ReactNode, Fragment } from "react";
 
 import { usePagesStore, useUserStore } from "../store";
 import componentMap from "../components/modules";
 import { InputChangeHandler, MouseEvent } from "../types";
+import Button from "../components/common/Button";
 
 export default function FlowModularPage() {
     const { pageNumber } = useParams();
@@ -53,25 +54,15 @@ export default function FlowModularPage() {
         <Navigate to="/data" />
     ) : (
         <section>
-            <h2 className="text-2xl underline">{currentPage?.title}</h2>
+            <h2 className="mb-6 text-2xl underline">{currentPage?.title}</h2>
 
             {pageComponentIDs.map((id, index) => (
-                <div key={index}>{generateComponent(id)}</div>
+                <Fragment key={index}>{generateComponent(id)}</Fragment>
             ))}
 
             <div>
-                <button
-                    className="mt-4 mr-4 cursor-pointer border p-2"
-                    onClick={handlePrevious}
-                >
-                    Previous
-                </button>
-                <button
-                    className="mt-4 mr-4 cursor-pointer border p-2"
-                    onClick={handleNext}
-                >
-                    Next
-                </button>
+                <Button label="Previous" onClick={handlePrevious} />
+                <Button label="Next" onClick={handleNext} />
             </div>
         </section>
     );
