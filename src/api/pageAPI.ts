@@ -28,7 +28,7 @@ export const getPages = async () => {
 export const updatePage = async (pageData: PageData) => {
     try {
         const response = await fetch("http://localhost:8000/api/update-page", {
-            method: "POST",
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },

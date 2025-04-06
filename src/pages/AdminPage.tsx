@@ -7,13 +7,29 @@ import Button from "../components/common/Button";
 
 export default function AdminPage() {
     const navigate = useNavigate();
-    const { pages } = usePagesStore();
+    const { pages, updatePage } = usePagesStore();
 
-    console.log(pages);
-
-    const handleClick = (e: MouseEvent) => {
+    const handleNavigate = (e: MouseEvent) => {
         e.preventDefault();
         navigate("/flow/1");
+    };
+
+    const removeComponent = async (page_number: number, component: string) => {
+        const removalPage = pages.find(
+            (page) => page.page_number === page_number,
+        );
+
+        if (removalPage) {
+            if (removalPage.components.length <= 1) {
+                return;
+            }
+
+            removalPage!.components = removalPage?.components.filter(
+                (comp) => comp.component_name !== component,
+            );
+
+            await updatePage(removalPage);
+        }
     };
 
     return (
@@ -22,7 +38,7 @@ export default function AdminPage() {
             <div className="mt-8 flex pb-6">
                 <div className="sidebar border-r-2 pr-8">
                     <h3 className="text-xl">Components</h3>
-                    <ul className="mt-8">
+                    <ul className="mt-4">
                         <li className="mb-4 w-50 rounded border bg-gray-300 px-4 py-2 text-center">
                             <p>Component 1</p>
                             <select className="m-1 cursor-pointer border p-1">
@@ -43,9 +59,13 @@ export default function AdminPage() {
                 </div>
                 <div className="w-full pl-8">
                     <h3 className="text-xl">Pages</h3>
-                    <ul className="mt-8">
+                    <ul className="mt-4">
                         {pages.map((page) => (
-                            <PageCard page={page} key={page.page_number} />
+                            <PageCard
+                                page={page}
+                                removeComponent={removeComponent}
+                                key={page.page_number}
+                            />
                         ))}
                     </ul>
                     <p className="text-sm">
@@ -56,7 +76,7 @@ export default function AdminPage() {
                     </p>
                 </div>
             </div>
-            <Button label="Back to Flow" onClick={handleClick} />
+            <Button label="Back to Flow" onClick={handleNavigate} />
         </div>
     );
 }

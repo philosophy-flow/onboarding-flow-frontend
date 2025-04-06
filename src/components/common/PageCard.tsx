@@ -3,21 +3,11 @@ import ComponentPill from "./ComponentPill";
 
 type PageCardProps = {
     page: PageData;
+    removeComponent: (pageNumber: number, component: string) => void;
 };
 
-export default function PageCard({ page }: PageCardProps) {
-    const componentNames = page.components.map((obj) => {
-        const first = obj.component_name.charAt(0).toUpperCase();
-        const remaining = obj.component_name.substring(1).toLowerCase();
-        return first + remaining;
-    });
-
-    const removeComponent = () => {
-        console.log("removing component ..");
-
-        // remove component from page, send updated page to db (this auto updates component)
-        // fetch latest list of unused components, this will update UI
-    };
+export default function PageCard({ page, removeComponent }: PageCardProps) {
+    const componentNames = page.components.map((obj) => obj.component_name);
 
     return (
         <li className="mb-3 flex max-w-md items-center rounded border bg-gray-50 p-3 text-lg">
@@ -27,7 +17,8 @@ export default function PageCard({ page }: PageCardProps) {
                     <ComponentPill
                         key={component}
                         name={component}
-                        onClick={removeComponent}
+                        page_number={page.page_number}
+                        removeComponent={removeComponent}
                     />
                 ))}
             </ul>
