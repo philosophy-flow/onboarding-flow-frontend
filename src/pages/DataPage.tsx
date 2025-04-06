@@ -6,11 +6,20 @@ import Button from "../components/common/Button";
 
 export default function DataPage() {
     const navigate = useNavigate();
-    const { userData, updateUser } = useUserStore();
+    const { userData, updateUser, logoutUser } = useUserStore();
 
-    const handleClick = async (e: MouseEvent) => {
+    const handleFlow = async (e: MouseEvent) => {
         e.preventDefault();
+
         await updateUser(userData!.username, { current_page: 1 });
+        navigate("/flow/1");
+    };
+
+    const handleLogout = async (e: MouseEvent) => {
+        e.preventDefault();
+
+        await updateUser(userData!.username, { current_page: 2 });
+        await logoutUser();
         navigate("/flow/1");
     };
 
@@ -29,7 +38,10 @@ export default function DataPage() {
                     ))}
                 </tbody>
             </table>
-            <Button label="Return to Flow" onClick={handleClick} />
+            <div>
+                <Button label="Return to Flow" onClick={handleFlow} />
+                <Button label="Logout" onClick={handleLogout} />
+            </div>
         </div>
     );
 }

@@ -6,6 +6,7 @@ import {
     updateUser,
     UserRegisterData,
     UserUpdateData,
+    logoutUser,
 } from "../api";
 
 type User = {
@@ -33,6 +34,10 @@ type UserStore = {
     updateUserLoading: boolean;
     updateUserError: string;
     updateUser: (username: string, userData: UserUpdateData) => Promise<void>;
+
+    logoutUserLoading: boolean;
+    logoutUserError: string;
+    logoutUser: () => Promise<void>;
 };
 
 const initialUser = {
@@ -105,6 +110,25 @@ const useUserStore = create<UserStore>()(
                     }
                 } finally {
                     set({ updateUserLoading: false });
+                }
+            },
+
+            logoutUserLoading: false,
+            logoutUserError: "",
+            logoutUser: async () => {
+                set({ logoutUserLoading: true, logoutUserError: "" });
+                try {
+                    const newUser = await logoutUser();
+                    set({ userData: newUser.data || initialUser });
+                } catch (error) {
+                    if (error instanceof Error) {
+                        set({ userData: initialUser || initialUser });
+                        set({ logoutUserError: error.message });
+                    } else {
+                        set({ logoutUserError: "An unknown error occurred" });
+                    }
+                } finally {
+                    set({ logoutUserLoading: false });
                 }
             },
         }),

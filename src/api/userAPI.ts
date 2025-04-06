@@ -89,3 +89,23 @@ export const updateUser = async (
         return { success: false, error: e };
     }
 };
+
+export const logoutUser = async () => {
+    try {
+        const response = await fetch(`http://localhost:8000/api/logout-user`, {
+            method: "POST",
+            credentials: "include",
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            return { success: true, data };
+        } else {
+            const errorData = await response.json();
+            return { success: false, error: errorData };
+        }
+    } catch (e) {
+        console.error(e);
+        return { success: false, error: e };
+    }
+};

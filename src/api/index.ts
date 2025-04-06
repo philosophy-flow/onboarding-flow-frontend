@@ -4,8 +4,9 @@ import {
     updateUser,
     UserRegisterData,
     UserUpdateData,
+    logoutUser,
 } from "./userAPI";
-export { getUser, createUser, updateUser };
+export { getUser, createUser, updateUser, logoutUser };
 export type { UserRegisterData, UserUpdateData };
 
 import {

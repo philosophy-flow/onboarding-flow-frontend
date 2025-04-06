@@ -81,6 +81,9 @@ export default function FlowLoginPage() {
                 />
                 <Button label="Admin" onClick={handleAdmin} />
             </div>
+            <p className="my-2 max-w-100 text-sm">
+                Enter a username and password to create a new account.
+            </p>
 
             <p className="my-2 max-w-100 text-sm">
                 If you already created an account, enter your username{" "}
