@@ -8,7 +8,9 @@ export default function AboutModule({ handleInputChange }: ModularComponent) {
     const [delayedAbout] = useDebounce(about, 2000);
 
     useEffect(() => {
-        handleInputChange("about", delayedAbout);
+        if (delayedAbout) {
+            handleInputChange("about", delayedAbout);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [delayedAbout]);
 

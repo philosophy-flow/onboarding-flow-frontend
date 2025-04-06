@@ -1,14 +1,15 @@
-import { useParams, Navigate } from "react-router-dom";
+import { useParams, Navigate, useNavigate } from "react-router-dom";
 import { ReactNode } from "react";
 
 import { usePagesStore, useUserStore } from "../store";
 import componentMap from "../components/modules";
-import { InputChangeHandler } from "../types";
+import { InputChangeHandler, MouseEvent } from "../types";
 
 export default function FlowModularPage() {
     const { pageNumber } = useParams();
     const { pages } = usePagesStore();
     const { updateUser, userData } = useUserStore();
+    const navigate = useNavigate();
 
     const currentPage = pages[parseInt(pageNumber!) - 2];
     const pageComponentIDs = currentPage?.components.map(
@@ -16,7 +17,7 @@ export default function FlowModularPage() {
     );
 
     const numPages = pages.length + 1;
-    const overflow = numPages > 1 && numPages < parseInt(pageNumber!);
+    const overflow = numPages < parseInt(pageNumber!);
 
     const handleInputChange: InputChangeHandler = async (
         inputName: string,
@@ -33,14 +34,45 @@ export default function FlowModularPage() {
         ) : null;
     };
 
+    const handlePrevious = (e: MouseEvent) => {
+        e.preventDefault();
+
+        const prevPage = parseInt(pageNumber!) - 1;
+        navigate(`/flow/${prevPage}`);
+    };
+
+    const handleNext = (e: MouseEvent) => {
+        e.preventDefault();
+
+        const nextPage = parseInt(pageNumber!) + 1;
+
+        navigate(`/flow/${nextPage}`);
+    };
+
     return overflow ? (
-        <Navigate to="/flow/1" />
+        <Navigate to="/data" />
     ) : (
         <section>
             <h2 className="text-2xl underline">{currentPage?.title}</h2>
+
             {pageComponentIDs.map((id, index) => (
                 <div key={index}>{generateComponent(id)}</div>
             ))}
+
+            <div>
+                <button
+                    className="mt-4 mr-4 cursor-pointer border p-2"
+                    onClick={handlePrevious}
+                >
+                    Previous
+                </button>
+                <button
+                    className="mt-4 mr-4 cursor-pointer border p-2"
+                    onClick={handleNext}
+                >
+                    Next
+                </button>
+            </div>
         </section>
     );
 }

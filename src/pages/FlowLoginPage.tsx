@@ -9,7 +9,7 @@ export default function FlowLoginPage() {
         username: "",
         password: "",
     });
-    const { createUser } = useUserStore();
+    const { createUser, getUser } = useUserStore();
     const navigate = useNavigate();
 
     const handleInputChange = (e: FormEvent) => {
@@ -27,6 +27,14 @@ export default function FlowLoginPage() {
             username: formData.username,
             password: formData.password,
         });
+
+        navigate("/flow/2");
+    };
+
+    const handleLogin = async (e: MouseEvent) => {
+        e.preventDefault();
+
+        await getUser(formData.username);
 
         navigate("/flow/2");
     };
@@ -59,10 +67,21 @@ export default function FlowLoginPage() {
             </div>
             <button
                 onClick={(e) => handleSubmit(e)}
-                className="mt-4 cursor-pointer border p-2"
+                className="mt-4 mr-4 cursor-pointer border p-2"
             >
                 Create Account
             </button>
+            <button
+                onClick={(e) => handleLogin(e)}
+                className="mt-4 mr-4 cursor-pointer border p-2"
+            >
+                Continue Flow
+            </button>
+            <p className="mt-4 text-sm">
+                If you already created an account, use your credentials and
+                press the <span className="italic">continue</span> button to
+                continue updating your profile.
+            </p>
         </>
     );
 }

@@ -15,7 +15,9 @@ export default function AddressModule({ handleInputChange }: ModularComponent) {
     useEffect(() => {
         const keys = Object.keys(delayedAddress) as Array<keyof typeof address>;
         keys.forEach((key) => {
-            handleInputChange(key, delayedAddress[key]);
+            if (delayedAddress[key]) {
+                handleInputChange(key, delayedAddress[key]);
+            }
         });
 
         // eslint-disable-next-line react-hooks/exhaustive-deps

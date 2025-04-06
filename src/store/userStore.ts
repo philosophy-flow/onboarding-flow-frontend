@@ -36,8 +36,8 @@ type UserStore = {
 };
 
 const initialUser = {
-    username: "praxmatic",
-    current_page: 2,
+    username: "",
+    current_page: 1,
     about: "",
     dob: "",
     street: "",
