@@ -15,6 +15,10 @@ export default function FlowLoginPage() {
     });
     const navigate = useNavigate();
 
+    const bothDisabled = !formData.username && !formData.password;
+    const createDisabled = bothDisabled || !formData.password;
+    const continueDisabled = Boolean(bothDisabled || formData.password);
+
     const handleLoginInputChange = (e: FormEvent) => {
         const { name, value } = e.target;
         setFormData({
@@ -65,13 +69,22 @@ export default function FlowLoginPage() {
             />
 
             <div>
-                <Button label="Create Account" onClick={handleCreate} />
-                <Button label="Continue Flow" onClick={handleLogin} />
+                <Button
+                    label="Create Account"
+                    onClick={handleCreate}
+                    disabled={createDisabled}
+                />
+                <Button
+                    label="Continue Flow"
+                    onClick={handleLogin}
+                    disabled={continueDisabled}
+                />
                 <Button label="Admin" onClick={handleAdmin} />
             </div>
 
-            <p className="my-2 text-sm">
-                If you already created an account, use your credentials and
+            <p className="my-2 max-w-100 text-sm">
+                If you already created an account, enter your username{" "}
+                <span className="underline">without</span> your password and
                 press the <span className="italic">Continue Flow</span> button
                 to continue updating your profile.
             </p>
