@@ -1,9 +1,21 @@
+import { useNavigate } from "react-router-dom";
+
+import Button from "../components/common/Button";
+import { MouseEvent } from "../types";
+
 export default function AdminPage() {
+    const navigate = useNavigate();
+
+    const handleClick = (e: MouseEvent) => {
+        e.preventDefault();
+        navigate("/flow/1");
+    };
+
     return (
         <div>
             <h2 className="text-2xl underline">Admin</h2>
-            <div className="mt-8 flex">
-                <div className="sidebar h-[50vh] border-r-2 pr-8">
+            <div className="mt-8 flex pb-6">
+                <div className="sidebar border-r-2 pr-8">
                     <h3 className="text-xl">Components</h3>
                     <ul className="mt-8">
                         <li className="mb-4 w-50 rounded border bg-gray-300 px-4 py-2 text-center">
@@ -47,6 +59,7 @@ export default function AdminPage() {
                     </p>
                 </div>
             </div>
+            <Button label="Back to Flow" onClick={handleClick} />
         </div>
     );
 }

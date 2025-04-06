@@ -42,6 +42,11 @@ export default function FlowLoginPage() {
         navigate("/flow/2");
     };
 
+    const handleAdmin = (e: MouseEvent) => {
+        e.preventDefault();
+        navigate("/admin");
+    };
+
     return (
         <>
             <h2 className="mb-6 text-2xl underline">
@@ -61,17 +66,15 @@ export default function FlowLoginPage() {
             />
 
             <div>
-                <Button
-                    label="Create Account"
-                    onClick={(e) => handleCreate(e)}
-                />
-                <Button label="Continue Flow" onClick={(e) => handleLogin(e)} />
+                <Button label="Create Account" onClick={handleCreate} />
+                <Button label="Continue Flow" onClick={handleLogin} />
+                <Button label="Admin" onClick={handleAdmin} />
             </div>
 
-            <p className="mt-2 text-sm">
+            <p className="my-2 text-sm">
                 If you already created an account, use your credentials and
-                press the <span className="italic">continue</span> button to
-                continue updating your profile.
+                press the <span className="italic">Continue Flow</span> button
+                to continue updating your profile.
             </p>
         </>
     );
