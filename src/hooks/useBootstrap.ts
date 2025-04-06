@@ -3,14 +3,16 @@ import { usePagesStore } from "../store";
 
 export default function useBootstrap() {
     const [appIsReady, setAppIsReady] = useState(false);
-    const { getPages } = usePagesStore();
+    const { getPages, getUnusedComponents } = usePagesStore();
     useEffect(() => {
         async function bootstrap() {
             await getPages();
+            await getUnusedComponents();
+
             setAppIsReady(true);
         }
         bootstrap();
-    }, [getPages]);
+    }, [getPages, getUnusedComponents]);
 
     return appIsReady;
 }

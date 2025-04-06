@@ -8,6 +8,12 @@ import {
 export { getUser, createUser, updateUser };
 export type { UserRegisterData, UserUpdateData };
 
-import { getPages, updatePage, ComponentData, PageData } from "./pageAPI";
-export { getPages, updatePage };
+import {
+    getPages,
+    updatePage,
+    ComponentData,
+    PageData,
+    getUnusedComponents,
+} from "./pageAPI";
+export { getPages, updatePage, getUnusedComponents };
 export type { ComponentData, PageData };

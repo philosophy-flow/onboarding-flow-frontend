@@ -47,3 +47,22 @@ export const updatePage = async (pageData: PageData) => {
         return { success: false, error: e };
     }
 };
+
+export const getUnusedComponents = async () => {
+    try {
+        const response = await fetch(
+            "http://localhost:8000/api/get-unused-components",
+        );
+
+        if (response.ok) {
+            const data = await response.json();
+            return { success: true, data };
+        } else {
+            const errorData = await response.json();
+            return { success: false, error: errorData };
+        }
+    } catch (e) {
+        console.error(e);
+        return { success: false, error: e };
+    }
+};
