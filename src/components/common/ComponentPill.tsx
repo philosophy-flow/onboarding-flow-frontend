@@ -11,6 +11,7 @@ export default function ComponentPill({
 }: ComponentPillProps) {
     const first = name.charAt(0).toUpperCase();
     const remaining = name.substring(1).toLowerCase();
+    const formattedName = first + remaining;
 
     return (
         <li
@@ -18,7 +19,7 @@ export default function ComponentPill({
             onClick={() => removeComponent(page_number, name)}
             className="mx-1 cursor-pointer rounded-full bg-gray-300 px-3 py-2 text-center text-sm first-of-type:ml-0 hover:bg-gray-400"
         >
-            {first + remaining}
+            {formattedName}
         </li>
     );
 }

@@ -4,10 +4,12 @@ import { MouseEvent } from "../types";
 import { usePagesStore } from "../store";
 import PageCard from "../components/common/PageCard";
 import Button from "../components/common/Button";
+import ComponentCard from "../components/common/ComponentCard";
 
 export default function AdminPage() {
     const navigate = useNavigate();
-    const { pages, updatePage } = usePagesStore();
+    const { pages, updatePage, unusedComponents, getUnusedComponents } =
+        usePagesStore();
 
     const handleNavigate = (e: MouseEvent) => {
         e.preventDefault();
@@ -29,6 +31,20 @@ export default function AdminPage() {
             );
 
             await updatePage(removalPage);
+            await getUnusedComponents();
+        }
+    };
+
+    const addComponent = async (page_number: number, component: string) => {
+        const additionPage = pages.find(
+            (page) => page.page_number === page_number,
+        );
+
+        if (additionPage) {
+            additionPage.components.push({ component_name: component });
+
+            await updatePage(additionPage);
+            await getUnusedComponents();
         }
     };
 
@@ -39,22 +55,14 @@ export default function AdminPage() {
                 <div className="sidebar border-r-2 pr-8">
                     <h3 className="text-xl">Components</h3>
                     <ul className="mt-4">
-                        <li className="mb-4 w-50 rounded border bg-gray-300 px-4 py-2 text-center">
-                            <p>Component 1</p>
-                            <select className="m-1 cursor-pointer border p-1">
-                                <option value="">Select Page</option>
-                                <option value="">Page 2</option>
-                                <option value="">Page 3</option>
-                            </select>
-                        </li>
-                        <li className="mb-4 w-50 rounded border bg-gray-300 px-4 py-2 text-center">
-                            <p>Component 2</p>
-                            <select className="m-1 cursor-pointer border p-1">
-                                <option value="">Select Page</option>
-                                <option value="">Page 2</option>
-                                <option value="">Page 3</option>
-                            </select>
-                        </li>
+                        {unusedComponents.map((component) => (
+                            <ComponentCard
+                                key={component.component_name}
+                                name={component.component_name}
+                                pages={pages}
+                                addComponent={addComponent}
+                            />
+                        ))}
                     </ul>
                 </div>
                 <div className="w-full pl-8">
