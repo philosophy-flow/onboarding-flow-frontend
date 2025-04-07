@@ -3,7 +3,7 @@ import { useDebounce } from "use-debounce";
 
 import { useUserStore } from "../../store";
 import { ModularComponent, InputChange } from "../../types";
-import Input from "../common/input";
+import Input from "../common/Input";
 
 export default function AddressModule({ handleInputChange }: ModularComponent) {
     const { userData } = useUserStore();
