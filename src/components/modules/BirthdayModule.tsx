@@ -9,7 +9,8 @@ export default function BirthdayModule({
     handleInputChange,
 }: ModularComponent) {
     const { userData } = useUserStore();
-    const [storedYear, storedMonth, storedDay] = userData!.dob.split("-");
+    const [storedYear, storedMonth, storedDay] =
+        userData!.dob?.split("-") || "";
 
     const [dateStr, setDateStr] = useState("");
     const [month, setMonth] = useState(storedMonth);
