@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { FormEvent, MouseEvent } from "../types";
@@ -14,12 +14,22 @@ type FormError = {
 
 export default function FlowLoginPage() {
     const [formError, setFormError] = useState({ create: false, login: false });
-    const { createUser, getUser, updateUser, userData } = useUserStore();
+    const { createUser, getUser, userData, updateUser } = useUserStore();
     const [formData, setFormData] = useState({
         username: userData?.username,
         password: "",
     });
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const updateUserPage = async () => {
+            updateUser(userData!.username, {
+                current_page: 1,
+            });
+        };
+        updateUserPage();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const bothDisabled = !formData.username && !formData.password;
     const createDisabled = bothDisabled || !formData.password;
@@ -64,7 +74,6 @@ export default function FlowLoginPage() {
         await getUser(formData.username || "refresh");
 
         if (userData!.username) {
-            await updateUser(userData!.username, { current_page: 2 });
             navigate("/flow/2");
             setFormError({
                 create: false,

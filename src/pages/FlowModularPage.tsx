@@ -1,5 +1,5 @@
 import { useParams, Navigate, useNavigate } from "react-router-dom";
-import { ReactNode, Fragment } from "react";
+import { ReactNode, Fragment, useEffect } from "react";
 
 import { usePagesStore, useUserStore } from "../store";
 import componentMap from "../components/modules";
@@ -20,6 +20,16 @@ export default function FlowModularPage() {
     const numPages = pages.length + 1;
     const overflow = numPages < parseInt(pageNumber!);
 
+    useEffect(() => {
+        const updateUserPage = async () => {
+            updateUser(userData!.username, {
+                current_page: parseInt(pageNumber!),
+            });
+        };
+        updateUserPage();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pageNumber]);
+
     const handleInputChange: InputChangeHandler = async (
         inputName: string,
         inputValue: string | number,
@@ -39,8 +49,6 @@ export default function FlowModularPage() {
         e.preventDefault();
 
         const prevPage = parseInt(pageNumber!) - 1;
-
-        await updateUser(userData!.username, { current_page: prevPage });
         navigate(`/flow/${prevPage}`);
     };
 
@@ -48,8 +56,6 @@ export default function FlowModularPage() {
         e.preventDefault();
 
         const nextPage = parseInt(pageNumber!) + 1;
-
-        await updateUser(userData!.username, { current_page: nextPage });
         navigate(`/flow/${nextPage}`);
     };
 
