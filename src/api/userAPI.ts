@@ -13,15 +13,14 @@ export type UserUpdateData = {
     zip?: string;
 };
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export const getUser = async (username: string = "refresh") => {
     try {
-        const response = await fetch(
-            `http://localhost:8000/api/get-user/${username}`,
-            {
-                method: "GET",
-                credentials: "include",
-            },
-        );
+        const response = await fetch(`${apiUrl}/get-user/${username}`, {
+            method: "GET",
+            credentials: "include",
+        });
 
         if (response.ok) {
             const data = await response.json();
@@ -38,7 +37,7 @@ export const getUser = async (username: string = "refresh") => {
 
 export const createUser = async (userData: UserRegisterData) => {
     try {
-        const response = await fetch("http://localhost:8000/api/create-user", {
+        const response = await fetch(`${apiUrl}/create-user`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -65,17 +64,14 @@ export const updateUser = async (
     userData: UserUpdateData,
 ) => {
     try {
-        const response = await fetch(
-            `http://localhost:8000/api/update-user/${username}`,
-            {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                credentials: "include",
-                body: JSON.stringify(userData),
+        const response = await fetch(`${apiUrl}/update-user/${username}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
             },
-        );
+            credentials: "include",
+            body: JSON.stringify(userData),
+        });
 
         if (response.ok) {
             const data = await response.json();
@@ -92,7 +88,7 @@ export const updateUser = async (
 
 export const logoutUser = async () => {
     try {
-        const response = await fetch(`http://localhost:8000/api/logout-user`, {
+        const response = await fetch(`${apiUrl}/logout-user`, {
             method: "POST",
             credentials: "include",
         });

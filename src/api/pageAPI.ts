@@ -8,9 +8,11 @@ export type PageData = {
     components: ComponentData[];
 };
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export const getPages = async () => {
     try {
-        const response = await fetch("http://localhost:8000/api/get-pages");
+        const response = await fetch(`${apiUrl}/get-pages`);
 
         if (response.ok) {
             const data = await response.json();
@@ -27,7 +29,7 @@ export const getPages = async () => {
 
 export const updatePage = async (pageData: PageData) => {
     try {
-        const response = await fetch("http://localhost:8000/api/update-page", {
+        const response = await fetch(`${apiUrl}/update-page`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -50,9 +52,7 @@ export const updatePage = async (pageData: PageData) => {
 
 export const getUnusedComponents = async () => {
     try {
-        const response = await fetch(
-            "http://localhost:8000/api/get-unused-components",
-        );
+        const response = await fetch(`${apiUrl}/get-unused-components`);
 
         if (response.ok) {
             const data = await response.json();

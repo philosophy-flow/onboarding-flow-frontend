@@ -5,7 +5,11 @@ export default function FlowFormLayout() {
     const { pages } = usePagesStore();
     return (
         <>
-            <h2 className="text-2xl font-bold">Onboarding Flow</h2>
+            <h2 className="text-2xl font-bold">Welcome to Onboarcerer</h2>
+            <p className="text-sm italic">
+                Your personal onboarding wizard.{" "}
+                <span className="text-lg not-italic">🧙✨</span>
+            </p>
             <form className="my-6 flex">
                 <nav className="min-w-fit border-r-2 pt-4 pr-8">
                     <ul className="text-right">

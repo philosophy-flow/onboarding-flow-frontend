@@ -10,7 +10,7 @@ export default function PageCard({ page, removeComponent }: PageCardProps) {
     const componentNames = page.components.map((obj) => obj.component_name);
 
     return (
-        <li className="mb-3 flex max-w-md items-center rounded border bg-gray-50 p-3 text-lg">
+        <li className="mb-3 flex max-w-md items-center rounded border bg-[#e5eaed] p-3 text-lg">
             <p className="mr-4">Page {page.page_number} |</p>
             <ul className="flex items-center">
                 {componentNames.map((component) => (
