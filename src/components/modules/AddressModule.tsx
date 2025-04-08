@@ -14,7 +14,7 @@ export default function AddressModule({ handleInputChange }: ModularComponent) {
         state: userData?.state,
         zip: userData?.zip,
     });
-    const [delayedAddress] = useDebounce(address, 2000);
+    const [delayedAddress] = useDebounce(address, 500);
 
     useEffect(() => {
         const keys = Object.keys(delayedAddress) as Array<keyof typeof address>;

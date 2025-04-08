@@ -16,7 +16,7 @@ export default function BirthdayModule({
     const [month, setMonth] = useState(storedMonth);
     const [day, setDay] = useState(storedDay);
     const [year, setYear] = useState(storedYear);
-    const [delayedDateStr] = useDebounce(dateStr, 2000);
+    const [delayedDateStr] = useDebounce(dateStr, 500);
 
     useEffect(() => {
         if (delayedDateStr) {

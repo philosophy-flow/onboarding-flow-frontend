@@ -7,7 +7,7 @@ import { ModularComponent, TextAreaChange } from "../../types";
 export default function AboutModule({ handleInputChange }: ModularComponent) {
     const { userData } = useUserStore();
     const [about, setAbout] = useState(userData?.about || "");
-    const [delayedAbout] = useDebounce(about, 2000);
+    const [delayedAbout] = useDebounce(about, 500);
 
     useEffect(() => {
         if (delayedAbout) {
