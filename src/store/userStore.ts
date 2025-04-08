@@ -25,11 +25,13 @@ type UserStore = {
 
     getUserLoading: boolean;
     getUserError: string;
-    getUser: (username?: string) => Promise<void>;
+    getUser: (username?: string) => Promise<{ success: boolean; data: User }>;
 
     createUserLoading: boolean;
     createUserError: string;
-    createUser: (userData: UserRegisterData) => Promise<void>;
+    createUser: (
+        userData: UserRegisterData,
+    ) => Promise<{ success: boolean; data: User }>;
 
     updateUserLoading: boolean;
     updateUserError: string;
@@ -61,8 +63,9 @@ const useUserStore = create<UserStore>()(
             getUser: async (username: string) => {
                 set({ getUserLoading: true, getUserError: "" });
                 try {
-                    const newUser = await getUser(username);
-                    set({ userData: newUser.data || initialUser });
+                    const existingUser = await getUser(username);
+                    set({ userData: existingUser.data || initialUser });
+                    return existingUser;
                 } catch (error) {
                     if (error instanceof Error) {
                         set({ userData: initialUser });
@@ -82,6 +85,7 @@ const useUserStore = create<UserStore>()(
                 try {
                     const newUser = await createUser(userData);
                     set({ userData: newUser.data || initialUser });
+                    return newUser;
                 } catch (error) {
                     if (error instanceof Error) {
                         set({ userData: initialUser || initialUser });

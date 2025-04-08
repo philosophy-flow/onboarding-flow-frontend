@@ -51,12 +51,12 @@ export default function FlowLoginPage() {
             login: false,
         });
 
-        await createUser({
+        const response = await createUser({
             username: formData.username!,
             password: formData.password,
         });
 
-        if (userData!.username) {
+        if (response.success) {
             navigate("/flow/2");
         } else {
             setFormError((prev: FormError) => ({ ...prev, create: true }));
@@ -71,9 +71,9 @@ export default function FlowLoginPage() {
             login: false,
         });
 
-        await getUser(formData.username || "refresh");
+        const response = await getUser(formData.username);
 
-        if (userData!.username) {
+        if (response.success) {
             navigate("/flow/2");
             setFormError({
                 create: false,
