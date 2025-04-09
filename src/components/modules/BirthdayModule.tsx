@@ -13,9 +13,9 @@ export default function BirthdayModule({
         userData!.dob?.split("-") || "";
 
     const [dateStr, setDateStr] = useState("");
-    const [month, setMonth] = useState(storedMonth);
-    const [day, setDay] = useState(storedDay);
-    const [year, setYear] = useState(storedYear);
+    const [month, setMonth] = useState(storedMonth || "");
+    const [day, setDay] = useState(storedDay || "");
+    const [year, setYear] = useState(storedYear || "");
     const [delayedDateStr] = useDebounce(dateStr, 500);
 
     useEffect(() => {
@@ -26,7 +26,7 @@ export default function BirthdayModule({
     }, [delayedDateStr]);
 
     useEffect(() => {
-        if (month && day && year) {
+        if (month && day && year?.length === 4) {
             const paddedMonth = month.padStart(2, "0");
             const paddedDay = day.padStart(2, "0");
 
@@ -44,6 +44,7 @@ export default function BirthdayModule({
                     name="month"
                     label="Month:"
                     value={month}
+                    maxLength={2}
                     onChange={(e) => setMonth(e.target.value)}
                 />
 
@@ -51,6 +52,7 @@ export default function BirthdayModule({
                     name="day"
                     label="Day:"
                     value={day}
+                    maxLength={2}
                     onChange={(e) => setDay(e.target.value)}
                 />
 
@@ -58,6 +60,7 @@ export default function BirthdayModule({
                     name="year"
                     label="Year:"
                     value={year}
+                    maxLength={4}
                     onChange={(e) => setYear(e.target.value)}
                 />
             </div>

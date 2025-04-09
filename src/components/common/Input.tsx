@@ -4,6 +4,7 @@ type InputPropTypes = {
     name: string;
     label: string;
     value: string;
+    maxLength?: number;
     onChange: (e: FormEvent) => void;
 };
 
@@ -11,6 +12,7 @@ export default function Input({
     name,
     label,
     value,
+    maxLength,
     onChange,
 }: InputPropTypes) {
     return (
@@ -21,6 +23,7 @@ export default function Input({
                 name={name}
                 className="block w-full max-w-100 border p-2"
                 value={value}
+                maxLength={maxLength}
                 onChange={onChange}
             />
         </div>
